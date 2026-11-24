@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Python Quiz Application</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #eaf2f8;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .container {
+            background: white;
+            width: 500px;
+            max-width: 90%;
+            margin: auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px #aaa;
+        }
+
+        h1 {
+            color: #154360;
+        }
+
+        .option {
+            display: block;
+            text-align: left;
+            background: #eef3f8;
+            padding: 12px;
+            margin: 10px;
+            border-radius: 8px;
+        }
+
+        button {
+            background: #2874a6;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            margin: 10px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .next {
+            background: #239b56;
+        }
+
+        .restart {
+            background: #d35400;
+        }
+
+        .feedback {
+            font-weight: bold;
+            color: #154360;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>PYTHON QUIZ APPLICATION</h1>
+
+    {% if result %}
+
+        <h2>Quiz Completed!</h2>
+
+        <h2>Your Score: {{ score }}/10</h2>
+
+        <form method="POST">
+            <button class="restart" name="action"
+                    value="restart">Restart Quiz</button>
+        </form>
+
+    {% else %}
+
+        <h3>Question {{ current + 1 }}/10</h3>
+
+        <h3>{{ questions[current].question }}</h3>
+
+        {% if not answered %}
+
+        <form method="POST">
+
+            {% for option in questions[current].options %}
+
+            <label class="option">
+                <input type="radio" name="option"
+                       value="{{ option }}">
+                {{ option }}
+            </label>
+
+            {% endfor %}
+
+            {% if error %}
+                <p style="color:red">{{ error }}</p>
+            {% endif %}
+
+            <button name="action" value="submit">
+                Submit Answer
+            </button>
+
+        </form>
+
+        {% else %}
+
+            <p class="feedback">{{ feedback }}</p>
+
+            <form method="POST">
+                <button class="next" name="action" value="next">
+                    Next Question
+                </button>
+            </form>
+
+        {% endif %}
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
